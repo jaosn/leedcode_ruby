@@ -62,4 +62,4 @@ def title_to_number(s)
   end
 end
 
-title_to_number("BA")
+puts title_to_number("BA")

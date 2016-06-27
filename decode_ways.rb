@@ -21,13 +21,11 @@ def num_decodings(s)
     return 0
   elsif s.length == 1
     if s.to_i == 0 then return 0 else return 1 end
-  elsif s.length == 2
-    if s.to_i <= 26 then return 2 else return 1 end
   else
-    hash = generate_hash
-    r = helper(hash,s,[])
-    binding.pry
+    nums = s.chars
+
   end
+
 end
 
 def generate_hash()
@@ -40,52 +38,6 @@ def generate_hash()
   return hash
 end
 
-def helper(hash,rest,res)
-  if rest.length <=1
-    return res
-  else
-    if res.length == 0
-      if one_valid?(rest)
-        res << rest[0]
-        helper(hash,rest[1..rest.length-1],res)
-      end
-      if two_valid?(rest,hash)
-        res << rest[0..1]
-        helper(hash,rest[2..rest.length-1],res)
-      end
-    else
-      temp = []
-      if one_valid?(rest)
-        for i in 0..res.length-1 do
-          temp << res[i] +","+ rest[0]
-        end
-        helper(hash,rest[1..rest.length-1],temp)
-      end
-      if two_valid?(rest,hash)
-        for i in 0..res.length-1 do
-          temp << res[i] +","+ rest[0..1]
-        end
-        helper(hash,rest[2..rest.length-1],temp)
-      end
-    end
-  end
-end
-
-def one_valid?(rest)
-  if rest[0] == "0" || rest[1] == "0"
-    return false
-  else
-    return true
-  end
-end
-
-def two_valid?(rest,hash)
-  if hash.has_value?(rest[0..1]) && rest[2] != "0"
-    return true
-  else
-    return false
-  end
-end
 
 s = "1112"
 # s = "1212"
