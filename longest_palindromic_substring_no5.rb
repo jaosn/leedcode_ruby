@@ -1,75 +1,68 @@
 require 'pry-byebug'
 
+# # works but time ineffcient
+# # @param {String} s
+# # @return {String}
+# def longest_palindrome(s)
+#   return s if s.length <= 1
+#   l,r = 0,0
+#   for i in 0..s.length-1 do
+#     temp1 = helper(s,i,i)
+#     temp2 = helper(s,i,i+1)
+#
+#     temp = [temp1,temp2].max
+#     if temp > r-l
+#       if temp % 2 == 0
+#         l = i - temp / 2 + 1
+#         r = i + temp / 2
+#       else
+#         l = i - temp / 2
+#         r = i + temp /2
+#       end
+#     end
+#   end
+#   return s[l..r]
+# end
+#
+# def helper(s,left,right)
+#   while s[left] == s[right] && left >= 0 && right <= s.length-1
+#     left -= 1
+#     right += 1
+#   end
+#   return right - left - 1
+# end
 
+# works but time ineffcient
 # @param {String} s
 # @return {String}
 def longest_palindrome(s)
-  result = ""
+  return s if s.length <= 1
+  
+end
 
-  if s.length == 0 || s.length == 1
-    return s
-  elsif s == nil
-    return nil
+def helper(s,res,i)
+  return s[i] if i == s.length-1
+  if s[i] == s[i+1]
+    l,r = i,i+1
   else
-    return find_all(s)
+    l,r = i,i
   end
-end
-
-def find_all(s)
-  temp = ""
-  for n in 0..s.length-1 do
-    temp1 = find_odd_pal(n,s)
-    temp2 = find_even_pal(n,s)
-    if temp1.length != 1 && temp1.length > temp.length
-      temp = temp1
-    end
-    if temp2.length > 2
-      if temp2.length > temp.length then temp = temp2 end
-    elsif temp2.length == 2 && temp2[0] == temp2[1]
-      if temp2.length > temp.length then temp = temp2 end
-    end
+  while s[l] = s[r] && l >= 0 && r <= s.length-1
+    l -= 1
+    r += 1
   end
-  return temp
+  return s[l..r]
 end
 
-def find_odd_pal(n,s)
-  pre = n
-  nxt = n
-  for i in 0..n do
-    pre -= 1
-    nxt += 1
-    if s[pre] != s[nxt] || edge?(pre+1,s) || edge?(nxt-1,s)
-      break
-    end
-  end
-  return s[pre+1..nxt-1]
-end
-
-def find_even_pal(n,s)
-  pre = n
-  nxt = n+1
-  for i in 0..n do
-    if s[pre] != s[nxt] || edge?(pre,s) || edge?(nxt,s)
-      break
-    else
-      pre -= 1
-      nxt += 1
-    end
-  end
-  return s[pre..nxt]
-end
-
-def edge?(n,s)
-  if n == 0 || n == s.length-1 then true else false end
-end
-
-
-sample = "aaaabaa"
+sample = "aaaa"
 #result = find_all(sample)
 #binding.pry
 #result = find_odd_pal(4,sample)
 result = longest_palindrome(sample)
 puts result
 
-puts "++++"
+# puts helper(sample,4,4)
+
+
+# puts "++++"
 #puts find_even_pal(4,sample)
